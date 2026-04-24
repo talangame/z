@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Private Poker Vietnam</title>
 
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '2078614512718634');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2078614512718634&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -405,39 +425,31 @@
   </main>
 
   <script>
-    /*
-      ВАЖНО:
-      Замени YOUR_PAGE_USERNAME на username Facebook-страницы.
-      Пример:
-      const pageUsername = "royalpokervietnam";
-    */
-
-    const pageUsername = "YOUR_PAGE_USERNAME";
-
+    const pageId = "61570727849450";
     const message = "Tôi muốn chơi poker";
     const encodedMessage = encodeURIComponent(message);
 
-    const messengerMobile = `fb-messenger://user-thread/${pageUsername}`;
-    const messengerWeb = `https://m.me/${pageUsername}?text=${encodedMessage}`;
+    const messengerWeb = `https://m.me/${pageId}?text=${encodedMessage}`;
+    const fallbackPage = "https://www.facebook.com/profile.php?id=61570727849450&mibextid=wwXIfr";
 
     function openMessenger() {
       showToast();
 
-      copyMessage();
-
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-      if (isMobile) {
-        window.location.href = messengerWeb;
-      } else {
-        window.location.href = messengerWeb;
+      if (typeof fbq === "function") {
+        fbq("track", "Contact");
       }
-    }
 
-    function copyMessage() {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(message).catch(() => {});
       }
+
+      setTimeout(() => {
+        window.location.href = messengerWeb;
+      }, 450);
+
+      setTimeout(() => {
+        window.location.href = fallbackPage;
+      }, 2800);
     }
 
     function showToast() {
