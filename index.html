@@ -19,6 +19,7 @@
     fbq('init', '2078614512718634');
     fbq('track', 'PageView');
   </script>
+
   <noscript>
     <img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=2078614512718634&ev=PageView&noscript=1"/>
@@ -234,6 +235,10 @@
     }
 
     .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
       position: relative;
       min-width: 270px;
       border: 0;
@@ -408,9 +413,13 @@
         </p>
 
         <div class="cta-row">
-          <button class="btn" onclick="openMessenger()">
+          <a
+            href="https://www.facebook.com/share/1EbaFos3jf/?mibextid=wwXIfr"
+            class="btn"
+            onclick="trackContact(event)"
+          >
             Nhận lời mời
-          </button>
+          </a>
 
           <div class="small">
             Chỉ dành cho khách được chọn
@@ -420,36 +429,23 @@
     </div>
 
     <div class="toast" id="toast">
-      Đang mở Messenger...
+      Đang mở Facebook...
     </div>
   </main>
 
   <script>
-    const pageId = "61570727849450";
-    const message = "Tôi muốn chơi poker";
-    const encodedMessage = encodeURIComponent(message);
+    function trackContact(event) {
+      event.preventDefault();
 
-    const messengerWeb = `https://m.me/${pageId}?text=${encodedMessage}`;
-    const fallbackPage = "https://www.facebook.com/profile.php?id=61570727849450&mibextid=wwXIfr";
-
-    function openMessenger() {
       showToast();
 
       if (typeof fbq === "function") {
         fbq("track", "Contact");
       }
 
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(message).catch(() => {});
-      }
-
       setTimeout(() => {
-        window.location.href = messengerWeb;
-      }, 450);
-
-      setTimeout(() => {
-        window.location.href = fallbackPage;
-      }, 2800);
+        window.location.href = "https://www.facebook.com/share/1EbaFos3jf/?mibextid=wwXIfr";
+      }, 350);
     }
 
     function showToast() {
